@@ -9,7 +9,7 @@ import { signOut } from "next-auth/react";
 import { SafeUser } from "@/app/types";
 
 interface UserMenuProps {
-  currentUser?: SafeUser;
+  currentUser?: SafeUser | null;
 }
 
 const UserMenu: FC<UserMenuProps> = ({ currentUser }) => {
