@@ -33,7 +33,7 @@ const RegisterModal: FC<RegisterModalProps> = ({}) => {
     setIsLoading(true);
 
     axios
-      .post("/api/auth/register", data)
+      .post("/api/register", data)
       .then((res) => {
         registerModal.onClose();
       })
