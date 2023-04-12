@@ -11,11 +11,13 @@ import Input from "../inputs/Input";
 import { toast } from "react-hot-toast";
 import Button from "../Button";
 import { signIn } from "next-auth/react";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 interface RegisterModalProps {}
 
 const RegisterModal: FC<RegisterModalProps> = ({}) => {
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -42,6 +44,11 @@ const RegisterModal: FC<RegisterModalProps> = ({}) => {
         toast.error("Something went wrong");
       })
       .finally(() => setIsLoading(false));
+  };
+
+  const toggleModals = () => {
+    registerModal.onClose();
+    loginModal.onOpen();
   };
 
   const bodyContent = (
@@ -94,7 +101,7 @@ const RegisterModal: FC<RegisterModalProps> = ({}) => {
         <div className="flex items-center justify-center gap-2 ">
           <p>Already have an account?</p>
           <p
-            onClick={registerModal.onClose}
+            onClick={toggleModals}
             className="cursor-pointer text-neutral-800 hover:underline"
           >
             Log in

@@ -36,11 +36,12 @@ const LoginModal: FC<LoginModalProps> = ({}) => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
 
-    signIn("credentials", { ...data, redirect: false }).then((res) => {
+    // add redirect false in case and uncomment router refresh
+    signIn("credentials", { ...data }).then((res) => {
       setIsLoading(false);
       if (res?.ok) {
         toast.success("Logged in");
-        router.refresh();
+        //router.refresh();
         loginModal.onClose();
       }
 
@@ -48,6 +49,11 @@ const LoginModal: FC<LoginModalProps> = ({}) => {
         toast.error(res.error);
       }
     });
+  };
+
+  const toggleModals = () => {
+    loginModal.onClose();
+    registerModal.onOpen();
   };
 
   const bodyContent = (
@@ -90,12 +96,12 @@ const LoginModal: FC<LoginModalProps> = ({}) => {
       />
       <div className="mt-4 font-light text-center text-neutral-500">
         <div className="flex items-center justify-center gap-2 ">
-          <p>Don&apos;t have an account?</p>
+          <p>First time using Airbnb?</p>
           <p
-            onClick={registerModal.onClose}
+            onClick={toggleModals}
             className="cursor-pointer text-neutral-800 hover:underline"
           >
-            Register
+            Create an account
           </p>
         </div>
       </div>
