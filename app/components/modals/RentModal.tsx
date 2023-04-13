@@ -83,6 +83,7 @@ const RentModal: FC<RentModalProps> = ({}) => {
       .then((res) => {
         toast.success("Listing created successfully!");
         router.refresh();
+        setStep(RENTSTEPS.CATEGORY);
         reset();
         rentModal.onClose();
       })
