@@ -1,7 +1,6 @@
 "use client";
 import { FC, useEffect, useState } from "react";
-import { SafeListing, SafeUser } from "../../types";
-import { Reservation } from "@prisma/client";
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 import { categories } from "@/constants/categories";
 import Container from "../Container";
 import ListingHead from "./ListingHead";
@@ -24,7 +23,7 @@ interface ListingClientProps {
   listing: SafeListing & {
     user: SafeUser;
   };
-  reservations?: Reservation[];
+  reservations?: SafeReservation[];
   currentUser?: SafeUser | null;
 }
 
@@ -47,8 +46,8 @@ const ListingClient: FC<ListingClientProps> = ({
 
     reservations.forEach((reservation) => {
       const range = eachDayOfInterval({
-        start: reservation.startDate,
-        end: reservation.endDate,
+        start: new Date(reservation.startDate),
+        end: new Date(reservation.endDate),
       });
 
       dates = [...dates, ...range];
