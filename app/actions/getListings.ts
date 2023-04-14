@@ -9,7 +9,7 @@ export default async function getListings() {
     });
 
     return listings;
-  } catch (error) {
-    throw new Error("error");
+  } catch (error: any) {
+    throw new Error(error);
   }
 }
