@@ -38,6 +38,11 @@ const RegisterModal: FC<RegisterModalProps> = ({}) => {
     axios
       .post("/api/register", data)
       .then((res) => {
+        signIn("credentials", {
+          email: data.email,
+          password: data.password,
+        });
+        toast.success(`Welcome ${data.name}!`);
         registerModal.onClose();
       })
       .catch((err) => {

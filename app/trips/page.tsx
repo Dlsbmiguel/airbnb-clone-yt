@@ -5,13 +5,9 @@ import getCurrentUser from "../actions/getCurrentUser";
 import getReservations from "../actions/getReservations";
 import TripsClient from "../components/trips/TripsClient";
 
-interface TripsPageProps {}
-
 const TripsPage = async ({}) => {
   const currentUser = await getCurrentUser();
-  const reservations = await getReservations({
-    userId: currentUser?.id,
-  });
+
   if (!currentUser) {
     return (
       <ClientOnly>
@@ -19,6 +15,10 @@ const TripsPage = async ({}) => {
       </ClientOnly>
     );
   }
+
+  const reservations = await getReservations({
+    userId: currentUser?.id,
+  });
 
   if (reservations.length === 0) {
     return (
