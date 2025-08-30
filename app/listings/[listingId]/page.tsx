@@ -5,14 +5,15 @@ import ClientOnly from "@/app/components/ClientOnly";
 import EmptyState from "@/app/components/EmptyState";
 import ListingClient from "@/app/components/listings/ListingClient";
 
-interface IParams {
-  listingId?: string;
-}
-
-const ListingPage = async ({ params }: { params: IParams }) => {
-  const listing = await getListingById(params);
+const ListingPage = async ({
+  params,
+}: {
+  params: Promise<{ listingId: string }>;
+}) => {
+  const { listingId } = await params;
+  const listing = await getListingById({ listingId });
   const currentUser = await getCurrentUser();
-  const reservations = await getReservations(params);
+  const reservations = await getReservations({ listingId });
 
   if (!listing)
     return (
