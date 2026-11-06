@@ -31,6 +31,9 @@ const Modal: FC<ModalProps> = ({
   const [showModal, setShowModal] = useState(isOpen);
 
   useEffect(() => {
+    // Syncing after mount is intentional: rendering once with showModal=false
+    // and then flipping it is what triggers the open transition.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShowModal(isOpen);
   }, [isOpen]);
 
@@ -59,7 +62,7 @@ const Modal: FC<ModalProps> = ({
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none bg-neutral-800/70">
+      <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-hidden focus:outline-hidden bg-neutral-800/70">
         <div className="relative w-full h-full mx-auto my-6 md:w-4/6 lg:w-3/6 xl:w-2/5 lg:h-auto md:h-auto">
           {/* CONTENT */}
           <div
@@ -69,7 +72,7 @@ const Modal: FC<ModalProps> = ({
                 : "translate-y-full opacity-0"
             }`}
           >
-            <div className="flex flex-col w-full h-full bg-white border-0 rounded-lg shadow-lg outline-none translate lg:h-auto md:h-auto focus:outline-none">
+            <div className="flex flex-col w-full h-full bg-white border-0 rounded-lg shadow-lg outline-hidden translate lg:h-auto md:h-auto focus:outline-hidden">
               {/* HEADER */}
               <div className="relative flex items-center justify-center p-6 border-b rounded-t">
                 <button

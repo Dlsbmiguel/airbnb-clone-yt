@@ -12,7 +12,7 @@ interface NavbarProps {
 
 const Navbar: FC<NavbarProps> = ({ currentUser }) => {
   return (
-    <div className="fixed z-10 w-full bg-white shadow-sm">
+    <div className="fixed z-10 w-full bg-white shadow-xs">
       <div className="py-4 border-b">
         <Container>
           <div className="flex items-center justify-between gap-3 md:gap-0">

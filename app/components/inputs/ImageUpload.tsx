@@ -22,7 +22,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
   );
   return (
     <CldUploadWidget
-      onUpload={handleUpload}
+      onSuccess={handleUpload}
       uploadPreset="csiiibpk"
       options={{
         maxFiles: 1,
