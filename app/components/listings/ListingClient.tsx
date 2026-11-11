@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 import { categories } from "@/constants/categories";
 import Container from "../Container";
@@ -36,10 +36,16 @@ const ListingClient: FC<ListingClientProps> = ({
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(listing.price);
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
 
   const category = categories.find((c) => c.label === listing.category);
+
+  const dayCount =
+    dateRange.startDate && dateRange.endDate
+      ? differenceInCalendarDays(dateRange.endDate, dateRange.startDate)
+      : 0;
+  const totalPrice =
+    dayCount && listing.price ? dayCount * listing.price : listing.price;
 
   const disabledDates = () => {
     let dates: Date[] = [];
@@ -81,24 +87,9 @@ const ListingClient: FC<ListingClientProps> = ({
       });
   };
 
-  useEffect(() => {
-    if (dateRange.startDate && dateRange.endDate) {
-      const dayCount = differenceInCalendarDays(
-        dateRange.endDate,
-        dateRange.startDate
-      );
-
-      if (dayCount && listing.price) {
-        setTotalPrice(dayCount * listing.price);
-      } else {
-        setTotalPrice(listing.price);
-      }
-    }
-  }, [dateRange, listing.price]);
-
   return (
     <Container>
-      <div className="max-w-screen-lg mx-auto">
+      <div className="max-w-(--breakpoint-lg) mx-auto">
         <div className="flex flex-col gap-6">
           <ListingHead
             title={listing.title}

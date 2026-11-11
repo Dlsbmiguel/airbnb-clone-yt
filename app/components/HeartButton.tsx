@@ -22,7 +22,7 @@ const HeartButton: FC<HeartButtonProps> = ({ listingId, currentUser }) => {
     >
       <AiOutlineHeart
         size={28}
-        className="fill-white absolute -top-[2px] -right-[2px]"
+        className="fill-white absolute top-[-2px] right-[-2px]"
       />
       <AiFillHeart
         size={24}

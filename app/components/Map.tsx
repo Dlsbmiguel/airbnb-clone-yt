@@ -5,13 +5,18 @@ import "leaflet/dist/leaflet.css";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import type { StaticImageData } from "next/image";
+
+// Turbopack imports images from node_modules as URL strings, webpack as objects
+const imageUrl = (image: StaticImageData | string) =>
+  typeof image === "string" ? image : image.src;
 
 // @ts-ignore
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconUrl: markerIcon.src,
-  iconRetinaUrl: markerIcon2x.src,
-  shadowUrl: markerShadow.src,
+  iconUrl: imageUrl(markerIcon),
+  iconRetinaUrl: imageUrl(markerIcon2x),
+  shadowUrl: imageUrl(markerShadow),
 });
 
 interface MapProps {

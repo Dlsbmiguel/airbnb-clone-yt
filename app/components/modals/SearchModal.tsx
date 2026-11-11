@@ -1,5 +1,5 @@
 "use client";
-import { FC, useMemo, useState } from "react";
+import { FC, useState } from "react";
 import Modal from "./Modal";
 import useSearchModal from "@/app/hooks/useSearchModal";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,8 @@ import Heading from "../Heading";
 import CountrySelect from "../inputs/CountrySelect";
 import Calendar from "../inputs/Calendar";
 import Counter from "../inputs/Counter";
+
+const Map = dynamic(() => import("../Map"), { ssr: false });
 
 interface SearchModalProps {}
 
@@ -31,15 +33,6 @@ const SearchModal: FC<SearchModalProps> = ({}) => {
     endDate: new Date(),
     key: "selection",
   });
-
-  const Map = useMemo(
-    () =>
-      dynamic(() => import("../Map"), {
-        ssr: false,
-      }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [location]
-  );
 
   const onBack = () => {
     setStep((value) => value - 1);
@@ -112,7 +105,7 @@ const SearchModal: FC<SearchModalProps> = ({}) => {
         onChange={(value) => setLocation(value as CountrySelectValue)}
       />
       <hr />
-      <Map center={location?.latlng} />
+      <Map key={location?.value} center={location?.latlng} />
     </div>
   );
 

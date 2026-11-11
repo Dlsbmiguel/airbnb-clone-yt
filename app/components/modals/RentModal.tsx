@@ -1,5 +1,5 @@
 "use client";
-import { FC, useMemo, useState } from "react";
+import { FC, useState } from "react";
 import Modal from "./Modal";
 import useRentModal from "@/app/hooks/useRentModal";
 import { RENTSTEPS } from "@/constants/rentSteps";
@@ -15,6 +15,8 @@ import Input from "../inputs/Input";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+
+const Map = dynamic(() => import("../Map"), { ssr: false });
 
 interface RentModalProps {}
 
@@ -51,12 +53,6 @@ const RentModal: FC<RentModalProps> = ({}) => {
   const roomCount = watch("roomCount");
   const bathroomCount = watch("bathroomCount");
   const imageSrc = watch("imageSrc");
-
-  const Map = useMemo(
-    () => dynamic(() => import("../Map"), { ssr: false }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [location]
-  );
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -139,7 +135,7 @@ const RentModal: FC<RentModalProps> = ({}) => {
           value={location}
           onChange={(value) => setCustomValue("location", value)}
         />
-        <Map center={location?.latlng} />
+        <Map key={location?.value} center={location?.latlng} />
       </div>
     );
   }
